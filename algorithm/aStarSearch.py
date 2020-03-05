@@ -1,7 +1,7 @@
 import sys
 import copy
-from heuristic import sum_of_abs
-from Queue import MyQueue, MyItem
+from .heuristic import sum_of_abs
+from .Queue import MyQueue, MyItem
 
 
 def left_neighbor(arr, i, j):
@@ -85,10 +85,10 @@ def a_star(start_arr):
         #print(current)
         soa = sum_of_abs(current.arr)
         if soa == 0:
-            print(current.arr)
+            # print(current.arr)
             break
         if soa < min_soa:
-            print(current.arr)
+            # print(current.arr)
             min_soa = soa
             
         for next in find_neighbors(current.arr):
@@ -101,7 +101,7 @@ def a_star(start_arr):
                 new_item = MyItem(priority, next)
                 frontier.append(new_item)
                 came_from[''.join(str(e) for e in next)] = current.arr
-                print(len(cost_so_far))
+                # print(len(cost_so_far))
 
     step = current.arr
     path = []
