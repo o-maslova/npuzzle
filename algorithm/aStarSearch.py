@@ -1,6 +1,7 @@
 import sys
 import copy
 from heuristic import sum_of_abs
+from Queue import MyQueue, MyItem
 
 
 def left_neighbor(arr, i, j):
@@ -66,34 +67,51 @@ def a_star(start_arr):
     weight = sum_of_abs(start_arr)
     nb = find_neighbors(start_arr)
 
-    frontier = []
-    frontier.append(start_arr)
-    #print(''.join(str(e) for e in start_arr))
+    frontier = MyQueue()
+    start_item = MyItem(0, start_arr)
+    frontier.append(start_item)
+
     came_from = {}
     cost_so_far ={}
     came_from[''.join(str(e) for e in start_arr)] = None
     cost_so_far[''.join(str(e) for e in start_arr)] = 0
-    #print(len(frontier))
-    while len(frontier) > 0:
-        current = frontier.pop(0)
+
+    current = start_item
+
+    min_soa = sum_of_abs(current.arr)
+
+    while len(frontier.list_items) > 0:
+        current = frontier.list_items.pop(0)
         #print(current)
-        if sum_of_abs(current) == 0:
-            print(current)
+        soa = sum_of_abs(current.arr)
+        if soa == 0:
+            print(current.arr)
             break
+        if soa < min_soa:
+            print(current.arr)
+            min_soa = soa
+            
+        for next in find_neighbors(current.arr):
 
-        for next in find_neighbors(current):
-            #print(next)
+            new_cost = cost_so_far[''.join(str(e) for e in current.arr)]
 
-            new_cost = cost_so_far[''.join(str(e) for e in current)] + 1
-            #print(new_cost)
             if ''.join(str(e) for e in next) not in cost_so_far or new_cost < cost_so_far[''.join(str(e) for e in next)]:
                 cost_so_far[''.join(str(e) for e in next)] = new_cost
-                priority = new_cost + sum_of_abs(next)
-                frontier.insert(priority, next)
-                came_from[''.join(str(e) for e in next)] = current
+                priority = sum_of_abs(next)
+                new_item = MyItem(priority, next)
+                frontier.append(new_item)
+                came_from[''.join(str(e) for e in next)] = current.arr
+                print(len(cost_so_far))
 
-    for key in came_from:
-        print(key)
-    #print(cost_so_far)
-    print(start_arr)
+    step = current.arr
+    path = []
+    while step != start_arr:
+        path.append(step)
+        step = came_from[''.join(str(e) for e in step)]
+
+    path.append(step)
+
+    for element in reversed(path):
+        print(element)
+
     return 0

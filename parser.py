@@ -25,7 +25,7 @@ def create_board(data: list):
     for elem in data:
         if elem[0] is '#':
             continue
-        elif elem[:-1].isdigit() is False:
+        elif elem.isdigit() is False:
             # print(elem, len(elem))
             sys.exit("No determined size of the board!")
         else:
@@ -40,13 +40,14 @@ def create_board(data: list):
 def parsing(string: str):
     # Check if this file exist
     try:
-        with open(string, 'r') as fd:
-            file_text = []
-            line = fd.readline()
-            while line:
-                file_text.append(line)
-                line = fd.readline()
-            return create_board(file_text)
+        file_text = [line.rstrip('\n') for line in open(string, 'r')]
+        # with open(string, 'r') as fd:
+        #     file_text = []
+        #     line = fd.readline()
+        #     while line:
+        #         file_text.append(line)
+        #         line = fd.readline()
+        return create_board(file_text)
     except IOError as err:
         print(err)
 
