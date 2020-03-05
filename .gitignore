@@ -1,4 +1,6 @@
 *.pyc
 .idea
-*/__pycache__
-*/migrations
+__pycache__/
+migrations/
+db.sqlite3
+venv/
