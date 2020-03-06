@@ -1,4 +1,4 @@
-#app {
+#npuzzle {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -6,7 +6,18 @@
 }
 
 #puzzle {
-    width: 100px;
-    height: 100px;
+    /*width: 100px;*/
+    /*height: 100px;*/
     border: 3px solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.cell {
+    border: 1px solid;
 }

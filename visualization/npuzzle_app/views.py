@@ -1,22 +1,34 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-
-def parse_line(line):
-    line = line[1:-2]
-    line_lst = line.split('],')
+from django.http import HttpResponse, JsonResponse
 
 
-def index(request):
+def parse_line(line, num):
+    tmp_dict = {}
+    i = 0
+    while i < num:
+        if i + 1 == num:
+            tmp_dict[i] = line[i][1:-1].split(',')
+        else:
+            tmp_dict[i] = line[i][1:].split(', ')
+        i += 1
+    return tmp_dict
+
+
+def solving(request):
 
     with open('../test', 'r') as fd:
         line = fd.readline()
-        lst = []
-        num_of_squares = len(line.split('],'))
+        lst = {}
+        i = 0
+        lst['num_of_squares'] = len(line.split('],'))
+        lst['steps'] = []
+        print(lst)
         while line:
             line = line[1:-2]
-            # print(line)
-            lst.append([elem.strip('[]') for elem in line.split(', ')])
+            line = line.split('], ')
+            lst['steps'].append({'step': i,
+                                 'state': parse_line(line=line, num=lst['num_of_squares'])
+                                 })
+            i += 1
             line = fd.readline()
     print(lst)
-    return HttpResponse(lst, content_type="application/json")
-    # return render(request, 'index.html')
+    return JsonResponse(lst, safe=False)
