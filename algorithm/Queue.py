@@ -13,11 +13,6 @@ class MyQueue:
         if len(self.list_items) == 0:
             self.list_items.append(item)
         else:
-            for child in self.list_items:
-                if child.arr == item.arr:
-                    i = self.list_items.index(child)
-                    self.list_items.pop(i)
-                    break
             i = -1
             # f.write('new line\n\n')
             for child in self.list_items:

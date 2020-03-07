@@ -95,13 +95,15 @@ def a_star(start_arr):
 
             new_cost = cost_so_far[''.join(str(e) for e in current.arr)]
 
-            if ''.join(str(e) for e in next) not in cost_so_far or new_cost < cost_so_far[''.join(str(e) for e in next)]:
+            if ''.join(str(e) for e in next) not in cost_so_far:
                 cost_so_far[''.join(str(e) for e in next)] = new_cost
                 priority = sum_of_abs(next)
                 new_item = MyItem(priority, next)
                 frontier.append(new_item)
                 came_from[''.join(str(e) for e in next)] = current.arr
-                print(len(cost_so_far))
+            elif new_cost < cost_so_far[''.join(str(e) for e in next)]:
+                cost_so_far[''.join(str(e) for e in next)] = new_cost
+                came_from[''.join(str(e) for e in next)] = current.arr
 
     step = current.arr
     path = []
