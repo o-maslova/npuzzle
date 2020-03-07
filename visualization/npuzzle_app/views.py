@@ -21,7 +21,6 @@ def solving(request):
         i = 0
         lst['num_of_squares'] = len(line.split('],'))
         lst['steps'] = []
-        print(lst)
         while line:
             line = line[1:-2]
             line = line.split('], ')
@@ -30,5 +29,4 @@ def solving(request):
                                  })
             i += 1
             line = fd.readline()
-    print(lst)
     return JsonResponse(lst, safe=False)

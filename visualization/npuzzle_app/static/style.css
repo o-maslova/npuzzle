@@ -1,23 +1,77 @@
-#npuzzle {
+* {
+    margin: 0 auto;
+    font-family: "Adobe Arabic";
+}
+
+body {
+    background-color: antiquewhite;
+}
+
+#header {
+    margin-top: 5vh;
+    display: flex;
+    width: 30vw;
+    height: 13vh;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(133, 7, 51, 1);
+    border: outset;
+    /*border-radius: 10px;*/
+}
+
+#header h3 {
+    font-size: 5vw;
+    color: white;
+    background-color: rgba(133, 7, 51, 1);
+}
+
+#app {
     display: flex;
     flex-direction: column;
+    border: 3px solid rgba(133, 7, 51, 1);
+    width: 80%;
+}
+
+#info {
+    margin-left: 10%;
+    width: inherit;
+    height: 10vh;
+    background-color: rgba(222, 175, 138, 1);
+}
+
+#info p {
+    padding: 10px;
+    font-size: 1.5em;
+}
+
+#npuzzle {
+    margin: 0;
+    padding: 5vw 0vw;
+    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 #puzzle {
-    /*width: 100px;*/
-    /*height: 100px;*/
     border: 3px solid;
     display: flex;
     flex-direction: column;
 }
 
-.row {
+.buttons {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    min-height: 20vw;
+    justify-content: space-between;
 }
 
-.cell {
-    border: 1px solid;
+button {
+    width: 10vw;
+    min-height: max-content;
+    height: 7vh;
+    border-radius: 3px;
+    border: 5px outset;
+    font-size: 1.5em;
+    color: white;
+    background-color: rgba(133, 7, 51, 1);
 }

@@ -8,9 +8,30 @@
         <link rel="stylesheet" type="text/css" href="static/style.css">
     </head>
     <body>
-        <div id="npuzzle">
-            <board v-bind:size="parseInt(num_of_squares)" v-bind:state="steps.state"></board>
-            <start-button title="Start!"></start-button>
+        <div id="header">
+            <h3>N-puzzle</h3>
+        </div>
+        <div id="app">
+            <div id="info">
+                <p>Speed: [[ speed ]] ms</p>
+            </div>
+            <div id="npuzzle">
+                <div class="buttons">
+                    <template v-if="is_started">
+                        <button @click="pause">Pause</button>
+                    </template>
+                    <template v-else>
+                        <button @click="start_play">Start!</button>
+                    </template>
+                    <button @click="next_step">Next step</button>
+                    <button @click="prev_step">Prev step</button>
+                </div>
+                <board v-bind:size="parseInt(num_of_squares)" v-bind:state="steps.state"></board>
+                <div class="buttons">
+                    <button @click="speed_up">Faster</button>
+                    <button @click="speed_down">Slower</button>
+                </div>
+            </div>
         </div>
         <script src="static/index.js"></script>
     </body>
