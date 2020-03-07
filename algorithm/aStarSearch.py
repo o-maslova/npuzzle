@@ -1,7 +1,7 @@
 import sys
 import copy
-from heuristic import sum_of_abs
-from Queue import MyQueue, MyItem
+from .heuristic import sum_of_abs
+from .Queue import MyQueue, MyItem
 
 
 def left_neighbor(arr, i, j):
@@ -85,10 +85,10 @@ def a_star(start_arr):
         #print(current)
         soa = sum_of_abs(current.arr)
         if soa == 0:
-            print(current.arr)
+            # print(current.arr)
             break
         if soa < min_soa:
-            print(current.arr)
+            # print(current.arr)
             min_soa = soa
             
         for next in find_neighbors(current.arr):
@@ -104,6 +104,7 @@ def a_star(start_arr):
             elif new_cost < cost_so_far[''.join(str(e) for e in next)]:
                 cost_so_far[''.join(str(e) for e in next)] = new_cost
                 came_from[''.join(str(e) for e in next)] = current.arr
+
 
     step = current.arr
     path = []
