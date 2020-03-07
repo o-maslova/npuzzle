@@ -85,15 +85,16 @@ def a_star(start_arr):
         #print(current)
         soa = sum_of_abs(current.arr)
         if soa == 0:
-            # print(current.arr)
+            print('FINISHED')
+            print(current.arr)
             break
-        if soa < min_soa:
-            # print(current.arr)
-            min_soa = soa
+        # if soa < min_soa:
+        #     # print(current.arr)
+        #     min_soa = soa
             
         for next in find_neighbors(current.arr):
 
-            new_cost = cost_so_far[''.join(str(e) for e in current.arr)]
+            new_cost = cost_so_far[''.join(str(e) for e in current.arr)] + 1
 
             if ''.join(str(e) for e in next) not in cost_so_far:
                 cost_so_far[''.join(str(e) for e in next)] = new_cost
@@ -116,5 +117,7 @@ def a_star(start_arr):
 
     for element in reversed(path):
         print(element)
+
+    print('LEN: ' + str(len(path)))
 
     return 0
