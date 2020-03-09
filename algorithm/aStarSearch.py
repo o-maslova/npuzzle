@@ -70,35 +70,60 @@ def is_solvable(arr):
         for j in range(arr_len):
             if arr[i][j] == 0:
                 sum_solv += i + 1
-                print("sum1: " + str(sum_solv))
                 continue
-            k = j + 1
-            while k < arr_len:
-                if arr[i][j] > arr[i][k] and arr[i][k] != 0:
-                    sum_solv += 1
-                    print("sum2: " + str(sum_solv))
-
-                k += 1
+            k = j - 1
+            m = i
+            while m >= 0:
+                while k >= 0:
+                    # print('arr1: ' + str(arr[i][j]) + 'arr2: ' + str(arr[m][k]))
+                    if arr[m][k] > arr[i][j]:
+                        # print('arr1: ' + str(arr[i][j]) + '; arr2: ' + str(arr[m][k]))
+                        sum_solv += 1
+                        # print('i: ' + str(i) + '; j: ' + str(j) + '; sum: ' + str(sum_solv))
+                    k -= 1
+                m -= 1
+                k = arr_len - 1
 
 
     return sum_solv
+
+# def is_solvable(arr):
+#     arr_len = len(arr)
+#     sum_solv = 0
+#
+#     for i in range(arr_len):
+#         for j in range(arr_len):
+#             if arr[i][j] == 0:
+#                 sum_solv += i + 1
+#                 print("sum1: " + str(sum_solv))
+#                 continue
+#             k = j + 1
+#             while k < arr_len:
+#                 if arr[i][j] > arr[i][k] and arr[i][k] != 0:
+#                     sum_solv += 1
+#                     print("sum2: " + str(sum_solv))
+#
+#                 k += 1
+#
+#
+#     return sum_solv
 
 def a_star(start_arr):
     weight = sum_of_abs(start_arr)
     nb = find_neighbors(start_arr)
 
-    print(is_solvable(start_arr))
-    if is_solvable(start_arr) % 2 == 1:
-        print("NOT SOLVABLE")
-        return
+    # print(is_solvable(start_arr))
+    # if is_solvable(start_arr) % 2 == 1:
+    #     print("NOT SOLVABLE")
+    #     return
 
-    heuristic_function = sum_of_abs
+    heuristic_function = sum_of_pow
     frontier = MyQueue()
     start_item = MyItem(0, start_arr)
     frontier.append(start_item)
 
     came_from = {}
-    cost_so_far ={}
+    cost_so_far = {}
     came_from[''.join(str(e) for e in start_arr)] = None
     cost_so_far[''.join(str(e) for e in start_arr)] = 0
 
@@ -120,16 +145,13 @@ def a_star(start_arr):
             
         for next in find_neighbors(current.arr):
 
-            new_cost = cost_so_far[''.join(str(e) for e in current.arr)]
+            new_cost = cost_so_far[''.join(str(e) for e in current.arr)] + 1
 
-            if ''.join(str(e) for e in next) not in cost_so_far:
+            if ''.join(str(e) for e in next) not in cost_so_far or new_cost < cost_so_far[''.join(str(e) for e in next)]:
                 cost_so_far[''.join(str(e) for e in next)] = new_cost
-                priority = heuristic_function(next)
+                priority = new_cost + heuristic_function(next)
                 new_item = MyItem(priority, next)
                 frontier.append(new_item)
-                came_from[''.join(str(e) for e in next)] = current.arr
-            elif new_cost < cost_so_far[''.join(str(e) for e in next)]:
-                cost_so_far[''.join(str(e) for e in next)] = new_cost
                 came_from[''.join(str(e) for e in next)] = current.arr
 
 
