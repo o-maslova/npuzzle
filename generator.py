@@ -91,7 +91,7 @@ if __name__ == "__main__":
         solv = False
 
     s = args.size
-
+    print("SOLVE = "+ str(solv))
     puzzle = make_puzzle(s, solvable=solv, iterations=args.iterations)
 
     w = len(str(s * s))

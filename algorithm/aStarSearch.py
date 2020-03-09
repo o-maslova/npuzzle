@@ -59,6 +59,7 @@ def find_neighbors(arr):
                 all_neighbors.append(r_n) if r_n != 0 else 0
                 all_neighbors.append(t_n) if t_n != 0 else 0
                 all_neighbors.append(b_n) if b_n != 0 else 0
+                break
 
     return all_neighbors
 
@@ -117,7 +118,7 @@ def a_star(start_arr):
     #     print("NOT SOLVABLE")
     #     return
 
-    heuristic_function = sum_of_pow
+    heuristic_function = sum_of_abs
     frontier = MyQueue()
     start_item = MyItem(0, start_arr)
     frontier.append(start_item)
@@ -126,33 +127,39 @@ def a_star(start_arr):
     cost_so_far = {}
     came_from[''.join(str(e) for e in start_arr)] = None
     cost_so_far[''.join(str(e) for e in start_arr)] = 0
-
+    close_set = {}
     current = start_item
 
     min_soa = heuristic_function(current.arr)
-
+    print(''.join(str(e) for e in current.arr))
     while len(frontier.list_items) > 0:
         current = frontier.list_items.pop(0)
         #print(current)
         soa = heuristic_function(current.arr)
+        current_arr_str = ''.join(str(e) for e in current.arr)
         if soa == 0:
             print('FINISHED')
             print(current.arr)
             break
-        # if soa < min_soa:
-        #     # print(current.arr)
-        #     min_soa = soa
-            
-        for next in find_neighbors(current.arr):
-
-            new_cost = cost_so_far[''.join(str(e) for e in current.arr)] + 1
-
-            if ''.join(str(e) for e in next) not in cost_so_far or new_cost < cost_so_far[''.join(str(e) for e in next)]:
-                cost_so_far[''.join(str(e) for e in next)] = new_cost
-                priority = new_cost + heuristic_function(next)
-                new_item = MyItem(priority, next)
-                frontier.append(new_item)
-                came_from[''.join(str(e) for e in next)] = current.arr
+        if soa < min_soa:
+            # print(current.arr)
+            min_soa = soa
+        if current_arr_str not in close_set:
+            close_set[current_arr_str] = current.arr
+            # print(''.join(str(e) for e in current.arr))
+            # input()
+            neighbors = find_neighbors(current.arr)
+            # print(len(neighbors))
+            for next in neighbors:
+                # print(''.join(str(e) for e in next))
+                new_cost = cost_so_far[current_arr_str] + 1
+                new_arr_str = ''.join(str(e) for e in next)
+                if new_arr_str not in cost_so_far or new_cost < cost_so_far[new_arr_str]:
+                    cost_so_far[new_arr_str] = new_cost
+                    priority = new_cost + heuristic_function(next)
+                    new_item = MyItem(priority, next)
+                    frontier.append(new_item)
+                    came_from[new_arr_str] = current.arr
 
 
     step = current.arr
