@@ -1,6 +1,6 @@
 import sys
 import copy
-from .heuristic import sum_of_abs
+from .heuristic import sum_of_abs, sum_of_pow
 from .Queue import MyQueue, MyItem
 
 
@@ -62,11 +62,37 @@ def find_neighbors(arr):
 
     return all_neighbors
 
+def is_solvable(arr):
+    arr_len = len(arr)
+    sum_solv = 0
+
+    for i in range(arr_len):
+        for j in range(arr_len):
+            if arr[i][j] == 0:
+                sum_solv += i + 1
+                print("sum1: " + str(sum_solv))
+                continue
+            k = j + 1
+            while k < arr_len:
+                if arr[i][j] > arr[i][k] and arr[i][k] != 0:
+                    sum_solv += 1
+                    print("sum2: " + str(sum_solv))
+
+                k += 1
+
+
+    return sum_solv
 
 def a_star(start_arr):
     weight = sum_of_abs(start_arr)
     nb = find_neighbors(start_arr)
 
+    print(is_solvable(start_arr))
+    if is_solvable(start_arr) % 2 == 1:
+        print("NOT SOLVABLE")
+        return
+
+    heuristic_function = sum_of_abs
     frontier = MyQueue()
     start_item = MyItem(0, start_arr)
     frontier.append(start_item)
@@ -78,12 +104,12 @@ def a_star(start_arr):
 
     current = start_item
 
-    min_soa = sum_of_abs(current.arr)
+    min_soa = heuristic_function(current.arr)
 
     while len(frontier.list_items) > 0:
         current = frontier.list_items.pop(0)
         #print(current)
-        soa = sum_of_abs(current.arr)
+        soa = heuristic_function(current.arr)
         if soa == 0:
             print('FINISHED')
             print(current.arr)
@@ -94,11 +120,11 @@ def a_star(start_arr):
             
         for next in find_neighbors(current.arr):
 
-            new_cost = cost_so_far[''.join(str(e) for e in current.arr)] + 1
+            new_cost = cost_so_far[''.join(str(e) for e in current.arr)]
 
             if ''.join(str(e) for e in next) not in cost_so_far:
                 cost_so_far[''.join(str(e) for e in next)] = new_cost
-                priority = sum_of_abs(next)
+                priority = heuristic_function(next)
                 new_item = MyItem(priority, next)
                 frontier.append(new_item)
                 came_from[''.join(str(e) for e in next)] = current.arr
