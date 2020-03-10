@@ -2,7 +2,7 @@ import sys
 import copy
 from .heuristic import sum_of_abs, sum_of_pow
 from .Queue import MyQueue, MyItem
-
+from .finalState import create_final_state
 
 def left_neighbor(arr, i, j):
     if j == 0:
@@ -110,9 +110,7 @@ def is_solvable(arr):
 #     return sum_solv
 
 def a_star(start_arr):
-    weight = sum_of_abs(start_arr)
-    nb = find_neighbors(start_arr)
-
+    final_state = create_final_state(len(start_arr))
     # print(is_solvable(start_arr))
     # if is_solvable(start_arr) % 2 == 1:
     #     print("NOT SOLVABLE")
@@ -130,33 +128,31 @@ def a_star(start_arr):
     close_set = {}
     current = start_item
 
-    min_soa = heuristic_function(current.arr)
+    # min_soa = heuristic_function(current.arr, final_state)
     print(''.join(str(e) for e in current.arr))
     while len(frontier.list_items) > 0:
         current = frontier.list_items.pop(0)
         #print(current)
-        soa = heuristic_function(current.arr)
+        h_f = heuristic_function(current.arr, final_state)
         current_arr_str = ''.join(str(e) for e in current.arr)
-        if soa == 0:
+        if h_f == 0:
             print('FINISHED')
             print(current.arr)
             break
-        if soa < min_soa:
-            # print(current.arr)
-            min_soa = soa
+        # if soa < min_soa:
+        #     # print(current.arr)
+        #     min_soa = soa
         if current_arr_str not in close_set:
             close_set[current_arr_str] = current.arr
             # print(''.join(str(e) for e in current.arr))
             # input()
             neighbors = find_neighbors(current.arr)
-            # print(len(neighbors))
             for next in neighbors:
-                # print(''.join(str(e) for e in next))
                 new_cost = cost_so_far[current_arr_str] + 1
                 new_arr_str = ''.join(str(e) for e in next)
                 if new_arr_str not in cost_so_far or new_cost < cost_so_far[new_arr_str]:
                     cost_so_far[new_arr_str] = new_cost
-                    priority = new_cost + heuristic_function(next)
+                    priority = new_cost + heuristic_function(next, final_state)
                     new_item = MyItem(priority, next)
                     frontier.append(new_item)
                     came_from[new_arr_str] = current.arr
