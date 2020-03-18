@@ -9,7 +9,8 @@ if __name__ == "__main__":
         # arr = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 15, 14, 0]] # not solvable
         # arr = [[ 7, 4, 3, 5], [6, 2, 11, 8], [12, 10, 13, 9], [0, 14, 1, 15]] # solvable generator
         # arr = [[8, 12, 7, 4], [5, 6, 0, 14], [3, 13, 15, 9], [1, 11, 10, 2]] # solvable
-        arr = [[10, 1, 14, 6], [3, 13, 5, 2], [4, 15, 9, 0], [8, 12, 7, 11]]
+        # arr = [[10, 1, 14, 6], [3, 13, 5, 2], [4, 15, 9, 0], [8, 12, 7, 11]]
+        arr = (10, 1, 14, 6, 3, 13, 5, 2, 4, 15, 9, 0, 8, 12, 7, 11)
 
         # arr = [[5,7,2,0], [13,4,8,11], [14,10,15,1], [12,3,6,9]] # solvable 100%
         # arr = [[3, 2, 6], [1, 4, 0], [8, 7, 5]] # not solvable
@@ -22,7 +23,9 @@ if __name__ == "__main__":
         # arr = [[7, 3, 4], [6, 0, 5], [8, 1, 2]] # solvable something wrong
         # arr = [[4, 2, 5], [7, 6, 3], [8, 1, 0]] # solvable something wrong
         # arr = [[7, 1, 4], [5, 8, 2], [3, 6, 0]] # solvable something wrong
+        # arr = (7, 1, 4, 5, 8, 2, 3, 6, 0) # solvable something wrong
         # arr = parsing(sys.argv[1])
+
         a_star(arr)
     else:
         print("usage: npuzzle.py 'filename'")
